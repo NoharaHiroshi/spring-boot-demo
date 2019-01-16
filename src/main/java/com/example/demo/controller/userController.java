@@ -120,19 +120,22 @@ public class userController {
     @RequestMapping(value = "/getFile", method = RequestMethod.GET)
     public String getFile(HttpServletRequest request, HttpServletResponse response) {
         try {
-            String filePath = "F:" + File.separator + "translation_pdf" + File.separator + "20190114_p1.pdf";
+            String filePath = "F:" + File.separator + "translation_pdf" + File.separator + "fin.pdf";
             System.out.println(filePath);
             File f = new File(filePath);
             // 获取文件长度
             Long fileLength = f.length();
+            // 文件读入流
             FileInputStream fileInputStream = new FileInputStream(f);
-            response.setHeader("Content-Disposition", "inline;filename=20190114_p1.pdf");
+            response.setHeader("Content-Disposition", "inline;filename=fin.pdf");
             response.setHeader("Content-Type", "application/pdf");
             // response 的输出流
             OutputStream os = response.getOutputStream();
+            // 建立一个字节流
             byte[] bytes = new byte[fileLength.intValue()];
-            fileInputStream.read(bytes);
-            // 写入文件内容
+            // 按照bytes大小将字节流存入bytes
+            System.out.println(fileInputStream.read(bytes));
+            // 写入bytes内容
             os.write(bytes);
             os.flush();
             os.close();
