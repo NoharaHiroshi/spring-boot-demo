@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.FileOutputStream;
 import com.google.gson.Gson;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.example.demo.model.User;
 
@@ -98,7 +101,7 @@ public class userController {
         String filePath = "F:" + File.separator + "translation_pdf" + File.separator + file.getOriginalFilename();
         File f = new File(filePath);
         if(!f.getParentFile().exists()){ //判断文件父目录是否存在
-            f.getParentFile().mkdir();
+            Boolean result = f.getParentFile().mkdir();
         }
         try {
             file.transferTo(f);
@@ -106,6 +109,38 @@ public class userController {
             e.printStackTrace();
         }
         return "success";
+    }
+
+    @RequestMapping(value = "/uploadBinaryFile", method = RequestMethod.POST)
+    public String uploadBinaryFile(@RequestBody Byte[] file){
+        System.out.println(file);
+        return "success";
+    }
+
+    @RequestMapping(value = "/getFile", method = RequestMethod.GET)
+    public String getFile(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String filePath = "F:" + File.separator + "translation_pdf" + File.separator + "20190114_p1.pdf";
+            System.out.println(filePath);
+            File f = new File(filePath);
+            // 获取文件长度
+            Long fileLength = f.length();
+            FileInputStream fileInputStream = new FileInputStream(f);
+            response.setHeader("Content-Disposition", "inline;filename=20190114_p1.pdf");
+            response.setHeader("Content-Type", "application/pdf");
+            // response 的输出流
+            OutputStream os = response.getOutputStream();
+            byte[] bytes = new byte[fileLength.intValue()];
+            fileInputStream.read(bytes);
+            // 写入文件内容
+            os.write(bytes);
+            os.flush();
+            os.close();
+            return null;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
