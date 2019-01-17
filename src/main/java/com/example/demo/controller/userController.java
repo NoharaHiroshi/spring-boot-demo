@@ -118,7 +118,7 @@ public class userController {
     }
 
     @RequestMapping(value = "/getFile", method = RequestMethod.GET)
-    public String getFile(HttpServletRequest request, HttpServletResponse response) {
+    public String getFile(HttpServletResponse response) {
         try {
             String filePath = "F:" + File.separator + "translation_pdf" + File.separator + "fin.pdf";
             System.out.println(filePath);
@@ -127,7 +127,7 @@ public class userController {
             Long fileLength = f.length();
             // 文件读入流
             FileInputStream fileInputStream = new FileInputStream(f);
-            response.setHeader("Content-Disposition", "inline;filename=fin.pdf");
+            response.setHeader("Content-Disposition", "inline;filename=" + f.getName());
             response.setHeader("Content-Type", "application/pdf");
             // response 的输出流
             OutputStream os = response.getOutputStream();
@@ -144,6 +144,25 @@ public class userController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequestMapping(value = "/getFile1", method = RequestMethod.GET)
+    public String getFile1(HttpServletResponse response){
+        try {
+            String filePath = "F:" + File.separator + "translation_pdf" + File.separator + "fin.pdf";
+            // 我发现java中的file类只是用来操作文件本身的，比如说获取文件大小和文件名，判断是否可读可写，并不能操作文件的内容。
+            FileInputStream op = new FileInputStream(filePath);
+            int fileLength = op.available();
+            byte[] bytes = new byte[fileLength];
+            op.read(bytes);
+            OutputStream responseOp = response.getOutputStream();
+            responseOp.write(bytes);
+            responseOp.flush();
+            responseOp.close();
+        } catch (Exception e){
+            return null;
+        }
+        return null;
     }
 
 }
