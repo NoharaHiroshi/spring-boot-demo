@@ -13,6 +13,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.FileOutputStream;
@@ -28,6 +29,7 @@ import com.example.demo.service.UserService;
 @RestController
 @SpringBootApplication
 //表示该controller类下所有的方法都公用的一级上下文根
+@Controller
 @RequestMapping(value="/user")
 public class userController {
     // 从前端传送过来的数据方式
@@ -45,6 +47,9 @@ public class userController {
 //        user.setId(1);
 //        return user;
 //    }
+
+    @Resource
+    private UserService userService;
 
     // 这里使用@RequestMapping注解表示该方法对应的二级上下文路径
     @RequestMapping(value = "/helloUser", method = RequestMethod.GET)
@@ -69,7 +74,6 @@ public class userController {
         System.out.println(user);
         System.out.println(user.getId());
         System.out.println(user.getName());
-        UserService userService = new UserService();
         try {
             userService.addNewUser(user);
         } catch (Exception e) {

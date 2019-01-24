@@ -13,8 +13,10 @@ public class UserService {
     @Resource
     private UserMapper userMapper;
 
-    public void addNewUser(User user){
-        userMapper.insert(user);
+    public String addNewUser(User user){
+        int result = userMapper.insert(user);
+        System.out.println(result);
+        return "addNewUser Success";
     }
 
 }
