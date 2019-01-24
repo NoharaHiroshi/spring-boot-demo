@@ -3,13 +3,18 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.model.User;
 
-// 05.实现业务层接口，引入持久层操作
-@Service
+import javax.annotation.Resource;
+
+@Service("userService")
 public class UserService {
 
-    public void addNewUser(){
+    @Resource
+    private UserMapper userMapper;
 
+    public void addNewUser(User user){
+        userMapper.insert(user);
     }
 
 }
