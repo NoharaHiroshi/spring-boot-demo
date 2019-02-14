@@ -67,6 +67,13 @@ public class UserController {
         return "success";
     }
 
+    @RequestMapping(value = "getAllUser", method = RequestMethod.GET)
+    public String getAllUser() {
+        User[] userList = userService.getAllUser();
+        Gson gson = new Gson();
+        return gson.toJson(userList);
+    }
+
     // RequestParam接收的参数是json格式的，不指定参数名，会默认使用属性名作为参数名
     @RequestMapping(value = "addCustomer", method = RequestMethod.POST)
     public String addCustomer(

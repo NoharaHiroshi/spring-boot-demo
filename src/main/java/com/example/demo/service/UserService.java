@@ -19,4 +19,9 @@ public class UserService {
         return "addNewUser Success";
     }
 
+    public User[] getAllUser() {
+        User[] userList = userMapper.selectAll();
+        return userList;
+    }
+
 }
