@@ -31,7 +31,7 @@ import com.example.demo.service.UserService;
 //表示该controller类下所有的方法都公用的一级上下文根
 @Controller
 @RequestMapping(value="/user")
-public class userController {
+public class UserController {
     // 从前端传送过来的数据方式
     // GET方式:
     // 1、用@RequestParam方式接受参数
@@ -40,16 +40,8 @@ public class userController {
     // 则为字符串类型，如果参数类型为模型类型，则为模型对象
     // 2、用表单方式接受数据，使用@RequstParam接收数据
 
-//    @RequestMapping(value = "/testJson", method = RequestMethod.GET)
-//    public @ResponseBody User testJson(){
-//        User user = new User();
-//        user.setName("Lands");
-//        user.setId(1);
-//        return user;
-//    }
-
     @Resource
-    private UserService userService;
+    UserService userService;
 
     // 这里使用@RequestMapping注解表示该方法对应的二级上下文路径
     @RequestMapping(value = "/helloUser", method = RequestMethod.GET)

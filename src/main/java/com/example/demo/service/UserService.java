@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 public class UserService {
 
     @Resource
-    private UserMapper userMapper;
+    UserMapper userMapper;
 
     public String addNewUser(User user){
         int result = userMapper.insert(user);
