@@ -3,33 +3,25 @@ package com.example.demo.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.util.List;
 
 import javax.annotation.Resource;
 
-import javassist.bytecode.ByteArray;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.FileOutputStream;
 import com.google.gson.Gson;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.example.demo.model.User;
 
 
 // @RestController注解能够使项目支持Rest，即返回数据的格式为json
 @RestController
 @SpringBootApplication
 //表示该controller类下所有的方法都公用的一级上下文根
-@Controller
+// @Controller
 @RequestMapping(value="/user")
 public class UserController {
     // 从前端传送过来的数据方式
