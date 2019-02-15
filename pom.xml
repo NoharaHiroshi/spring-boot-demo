@@ -30,6 +30,7 @@
             <!-- 通常通过包名，项目名，版本号可以定位一个jar包 -->
         </dependency>
         <dependency>
+            <!-- Web 开发包，将载入 Spring MVC 所需要的包，且内嵌 tomcat -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
