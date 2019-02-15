@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.demo.service.UserService;
 import com.example.demo.model.User;
+import com.example.demo.model.Result;
 
 
 // @RestController注解能够使项目支持Rest，即返回数据的格式为json
@@ -77,6 +78,12 @@ public class UserController {
         User[] userList = userService.getAllUser();
         Gson gson = new Gson();
         return gson.toJson(userList);
+    }
+
+    @RequestMapping(value = "searchUser", method = RequestMethod.GET)
+    public User[] searchUser(@RequestParam(value = "name", defaultValue = "") String name) {
+        User[] userList = userService.searchUserByName(name);
+        return userList;
     }
 
     // RequestParam接收的参数是json格式的，不指定参数名，会默认使用属性名作为参数名
@@ -175,20 +182,36 @@ public class UserController {
 
     @RequestMapping(value="addCustomer", method = RequestMethod.GET)
     public String addCustomer(
-            @RequestParam(value="id") Integer id,
-            @RequestParam(value = "name") String name,
-            @RequestParam(value = "user_id") Integer userId
+            @RequestParam(value="id", defaultValue = "") Integer id,
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "user_id", defaultValue = "") Integer userId
     ){
-        if (id != null && name != null && userId != null) {
-            Customer customer = new Customer();
-            customer.setId(id);
-            customer.setName(name);
-            customer.setUserId(userId);
-            customerService.addCustomer(customer);
-            return "创建成功";
-        }else {
-            return "参数不正确";
+        System.out.println(name);
+        System.out.println(userId);
+        Gson gson = new Gson();
+        Result result = new Result();
+        result.setCode(0);
+        result.setMsg("创建成功");
+        try {
+            if (id != null && name != null && userId != null) {
+                Customer customer = new Customer();
+                customer.setId(id);
+                customer.setName(name);
+                customer.setUserId(userId);
+                Integer code = customerService.addCustomer(customer);
+                if ( code == -1 ){
+                    result.setCode(code);
+                    result.setMsg("当前User不存在");
+                }
+            }else {
+                result.setCode(-2);
+                result.setMsg("参数不正确");
+            }
+        }catch (Exception e) {
+            result.setCode(-99);
+            result.setMsg("发生错误");
         }
+        return gson.toJson(result);
     }
 
 }

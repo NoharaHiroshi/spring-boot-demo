@@ -48,6 +48,16 @@ public interface UserMapper {
     })
     User[] selectAll();
 
+    @Select({
+            "select id, name from user",
+            "where name = #{name, jdbcType=VARCHAR}"
+    })
+    @Results({
+            @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR)
+    })
+    User[] getUserByName(String name);
+
     @UpdateProvider(type=UserSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(User record);
 

@@ -5,7 +5,9 @@ public class Customer {
 
     private String name;
 
-    private Integer userId;
+    private User user;
+
+     private Integer userId;
 
     public Integer getId() {
         return id;
@@ -29,5 +31,13 @@ public class Customer {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

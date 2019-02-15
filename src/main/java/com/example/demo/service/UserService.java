@@ -24,4 +24,9 @@ public class UserService {
         return userList;
     }
 
+    public User[] searchUserByName(String name) {
+        User[] userList = userMapper.getUserByName(name);
+        return userList;
+    }
+
 }
