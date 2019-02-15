@@ -33,6 +33,7 @@
             <javaClientGenerator> (0个或1个)
             <table> (1个或多个)
         -->
+
         <commentGenerator>
             <!-- 是否去除自动生成的注释带有时间戳 true：是 ： false:否 -->
             <property name="suppressDate" value="true"/>
@@ -104,6 +105,7 @@
                 enableDeleteByExample="false"
                 enableSelectByExample="false"
                 selectByExampleQueryId="false"
-        ></table>
+        >
+        </table>
     </context>
 </generatorConfiguration>

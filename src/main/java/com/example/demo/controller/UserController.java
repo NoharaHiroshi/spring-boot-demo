@@ -6,6 +6,8 @@ import java.io.OutputStream;
 
 import javax.annotation.Resource;
 
+import com.example.demo.model.Customer;
+import com.example.demo.service.CustomerService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +36,9 @@ public class UserController {
 
     @Resource
     UserService userService;
+
+    @Resource
+    CustomerService customerService;
 
     // 这里使用@RequestMapping注解表示该方法对应的二级上下文路径
     @RequestMapping(value = "/helloUser", method = RequestMethod.GET)
@@ -166,6 +171,24 @@ public class UserController {
             return null;
         }
         return null;
+    }
+
+    @RequestMapping(value="addCustomer", method = RequestMethod.GET)
+    public String addCustomer(
+            @RequestParam(value="id") Integer id,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "user_id") Integer userId
+    ){
+        if (id != null && name != null && userId != null) {
+            Customer customer = new Customer();
+            customer.setId(id);
+            customer.setName(name);
+            customer.setUserId(userId);
+            customerService.addCustomer(customer);
+            return "创建成功";
+        }else {
+            return "参数不正确";
+        }
     }
 
 }
