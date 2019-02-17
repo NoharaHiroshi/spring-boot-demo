@@ -181,14 +181,13 @@ public class UserController {
     }
 
     @RequestMapping(value="addCustomer", method = RequestMethod.GET)
-    public String addCustomer(
+    public Result addCustomer(
             @RequestParam(value="id", defaultValue = "") Integer id,
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "user_id", defaultValue = "") Integer userId
     ){
         System.out.println(name);
         System.out.println(userId);
-        Gson gson = new Gson();
         Result result = new Result();
         result.setCode(0);
         result.setMsg("创建成功");
@@ -211,7 +210,6 @@ public class UserController {
             result.setCode(-99);
             result.setMsg("发生错误");
         }
-        return gson.toJson(result);
+        return result;
     }
-
 }
