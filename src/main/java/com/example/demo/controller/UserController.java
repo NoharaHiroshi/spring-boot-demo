@@ -3,11 +3,15 @@ package com.example.demo.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import com.example.demo.model.Customer;
 import com.example.demo.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.example.demo.service.UserService;
 import com.example.demo.model.User;
 import com.example.demo.model.Result;
+import com.example.demo.util.ServiceResult;
 
 
 // @RestController注解能够使项目支持Rest，即返回数据的格式为json
@@ -33,6 +38,7 @@ public class UserController {
     // 1、用json方式接收数据，使用@RequestBody注解接收参数。接收到的参数，如果参数类型为String，
     // 则为字符串类型，如果参数类型为模型类型，则为模型对象
     // 2、用表单方式接受数据，使用@RequstParam接收数据
+    private static final Logger mainLogger = LoggerFactory.getLogger(UserController.class);
 
     @Resource
     UserService userService;
@@ -213,9 +219,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/getCustomer", method = RequestMethod.GET)
-    public Customer getCustomer(@RequestParam(value = "id", defaultValue = "") Integer id){
+    public ServiceResult getCustomer(@RequestParam(value = "id", defaultValue = "") Integer id){
+        // String 代表Key为String类型， Object 代表Value为Object类型
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("code", 0);
+        resultMap.put("data", "");
+        resultMap.put("msg", "查找成功");
         Customer customer = customerService.getCustomerAndUser(id);
-        System.out.println(customer);
-        return customer;
+        if (customer != null){
+            resultMap.put("data", customer);
+        }else{
+            resultMap.put("msg", "未查找到当前customer");
+        }
+        ServiceResult serviceResult = ServiceResult.success(customer);
+        return serviceResult;
     }
 }
