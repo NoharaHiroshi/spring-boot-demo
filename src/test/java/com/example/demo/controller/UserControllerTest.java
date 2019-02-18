@@ -36,9 +36,6 @@ public class UserControllerTest {
         User user = new User();
         user.setId(4);
         user.setName("LJC");
-        mvc.perform(MockMvcRequestBuilders.post("/user/addUser")
-        .accept(MediaType.APPLICATION_JSON_UTF8).content("123")
-        )
     }
 
     @Test
