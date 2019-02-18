@@ -211,4 +211,11 @@ public class UserController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/getCustomer", method = RequestMethod.GET)
+    public Customer getCustomer(@RequestParam(value = "id", defaultValue = "") Integer id){
+        Customer customer = customerService.getCustomerAndUser(id);
+        System.out.println(customer);
+        return customer;
+    }
 }

@@ -29,4 +29,9 @@ public class CustomerService {
         }
 
     }
+
+    public Customer getCustomerAndUser(Integer customerId) {
+        Customer customer = customerMapper.getCustomerAndUser(customerId);
+        return customer;
+    }
 }

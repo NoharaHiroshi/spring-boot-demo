@@ -7,7 +7,7 @@ public class Customer {
 
     private User user;
 
-     private Integer userId;
+    private Integer userId;
 
     public Integer getId() {
         return id;
@@ -39,5 +39,14 @@ public class Customer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id: " + id +
+                ", name: " + name +
+                ", userName: " + user.getName() +
+                "}";
     }
 }
