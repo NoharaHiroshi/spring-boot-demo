@@ -221,17 +221,13 @@ public class UserController {
     @RequestMapping(value = "/getCustomer", method = RequestMethod.GET)
     public ServiceResult getCustomer(@RequestParam(value = "id", defaultValue = "") Integer id){
         // String 代表Key为String类型， Object 代表Value为Object类型
-        Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("code", 0);
-        resultMap.put("data", "");
-        resultMap.put("msg", "查找成功");
         Customer customer = customerService.getCustomerAndUser(id);
+        ServiceResult<Customer> result = new ServiceResult<>();
         if (customer != null){
-            resultMap.put("data", customer);
+            result.success(customer);
         }else{
-            resultMap.put("msg", "未查找到当前customer");
+            result.failure("-1", "未查找到当前customer");
         }
-        ServiceResult serviceResult = ServiceResult.success(customer);
-        return serviceResult;
+        return result;
     }
 }
