@@ -219,7 +219,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/getCustomer", method = RequestMethod.GET)
-    public ServiceResult getCustomer(@RequestParam(value = "id", defaultValue = "") Integer id){
+    // 方法中的throws表示当前方法体不处理异常，由调用者处理异常
+    public ServiceResult getCustomer(@RequestParam(value = "id", defaultValue = "") Integer id) throws Exception{
         // String 代表Key为String类型， Object 代表Value为Object类型
         Customer customer = customerService.getCustomerAndUser(id);
         ServiceResult<Customer> result = new ServiceResult<>();
