@@ -10,12 +10,15 @@ import javax.annotation.Resource;
 
 import com.example.demo.model.Customer;
 import com.example.demo.service.CustomerService;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
+import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,6 +69,7 @@ public class UserController {
     public String addUser(@RequestBody User user){
         // 原来java可以直接映射json字符串为对象，难怪他说要我按照模型字段来传数据了
         // 看来java的接口思路就是通过对象实例传输，前端对象 <=> 后端对象 <=> 数据库对象 保持一致
+        // 指定函数参数为User类型时，会默认调用User的同名构造方法。另外，如果函数参数的属性与模型属性不匹配时，不会报错，只是属性没有值
         System.out.println(user);
         System.out.println(user.getId());
         System.out.println(user.getName());
@@ -76,6 +80,22 @@ public class UserController {
             return "error";
         }
         return "success";
+    }
+
+    // 接收JSON数据后转换成java 的各种数据类型
+    @RequestMapping(value = "/addUserByJson", method = RequestMethod.POST)
+    public HashMap<String, Object> addUserByJson(@RequestBody String params) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        // 直接转换成Java Object
+        User user = JSONObject.parseObject(params, User.class);
+        System.out.println(user.toString());
+
+        // 转换成HashMao
+        HashMap<String, Object> userHash = JSONObject.parseObject(params, new TypeToken<HashMap<String, Object>>(){}.getType());
+        System.out.println(userHash.toString());
+
+        return hashMap;
     }
 
     @RequestMapping(value = "getAllUser", method = RequestMethod.GET)

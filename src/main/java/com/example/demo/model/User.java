@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class User {
     private Integer id;
 
@@ -19,5 +21,11 @@ public class User {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    @Override
+    public String toString() {
+        String json = JSONObject.toJSONString(this);
+        return json;
     }
 }
